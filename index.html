@@ -7,7 +7,17 @@
     <title>AonWki</title>
     <link rel="stylesheet" href="./namumark.css" />
     <link rel="stylesheet" href="./interactions.css" />
-    <link rel="stylesheet" href="./before-namu.css" />
+    <link rel="stylesheet" href="./AonWiki.css" />
+    <script>
+      (function () {
+        const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.addEventListener("DOMContentLoaded", () => document.body.classList.add(dark ? "theseed-dark-mode" : "theseed-light-mode"));
+        if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+          document.body.classList.toggle("theseed-dark-mode", e.matches);
+          document.body.classList.toggle("theseed-light-mode", !e.matches);
+        });
+      })();
+    </script>
   </head>
   <body>
     <div class="bn-container" id="top">
