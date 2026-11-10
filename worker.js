@@ -23,10 +23,13 @@ async function handle(request,env){
  let pathname;try{pathname=decodeURIComponent(url.pathname)}catch{return new Response("Bad Request",{status:400})}
  if(pathname==="/")pathname="/index.html";
  if(pathname.includes("..")||pathname.includes("\\")||pathname.includes("\0"))return new Response("Bad Request",{status:400});
- const upstream=await fetch(ORIGIN+pathname+url.search,{method:request.method==="HEAD"?"HEAD":"GET",headers:{Accept:request.headers.get("Accept")||"*/*"},cf:{cacheTtl:60,cacheEverything:true}});
- const headers=new Headers(upstream.headers),ext=pathname.toLowerCase().slice(pathname.lastIndexOf("."));
+ const ext=pathname.toLowerCase().slice(pathname.lastIndexOf("."));
+ const noCache=[".html",".htm",".js",".mjs"].includes(ext);
+ const upstream=await fetch(ORIGIN+pathname+url.search,{method:request.method==="HEAD"?"HEAD":"GET",headers:{Accept:request.headers.get("Accept")||"*/*"},cf:noCache?{cacheTtl:0,cacheEverything:false}:{cacheTtl:60,cacheEverything:true}});
+ const headers=new Headers(upstream.headers);
  if(MIME[ext])headers.set("Content-Type",MIME[ext]);
- headers.set("Cache-Control","public, max-age=60, s-maxage=60");headers.set("X-Content-Type-Options","nosniff");headers.delete("content-security-policy");
+ headers.set("Cache-Control",noCache?"no-store, no-cache, must-revalidate":"public, max-age=60, s-maxage=60");
+ headers.set("X-Content-Type-Options","nosniff");headers.delete("content-security-policy");
  return new Response(upstream.body,{status:upstream.status,statusText:upstream.statusText,headers});
 }
 export default {fetch:handle};
