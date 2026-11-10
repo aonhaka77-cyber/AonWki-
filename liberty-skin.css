@@ -1252,3 +1252,23 @@ div.scroll-buttons a {
 @media(prefers-color-scheme:dark){.Liberty,body{background:#15191e;color:#ddd}.Liberty .content-wrapper .liberty-content .liberty-content-header,.Liberty .content-wrapper .liberty-content .liberty-content-main,.Liberty .content-wrapper .liberty-footer,.Liberty .content-wrapper .liberty-sidebar .live-recent,.Liberty .content-wrapper .liberty-sidebar .live-recent-content,.Liberty .content-wrapper .liberty-content .panel,.Liberty .content-wrapper .liberty-content .search-result{background:#20252b;color:#ddd;border-color:#444}.Liberty .content-wrapper .liberty-content .liberty-content-header .title>h1,.Liberty .content-wrapper .liberty-content .liberty-content-header .title{color:#ddd}.Liberty .content-wrapper .liberty-content .liberty-content-main pre{background:#292f36;color:#ddd}.Liberty .content-wrapper .liberty-content .liberty-content-main .editor textarea{background:#171b20;color:#ddd;border-color:#555}.Liberty .content-wrapper .liberty-content .liberty-content-main .button{background:#292f36;color:#ddd;border-color:#555}.Liberty .content-wrapper .liberty-content .liberty-content-main .button.primary{background:#4188f1;color:#fff}.Liberty .content-wrapper .liberty-sidebar .live-recent-header{background:#292f36;color:#ddd;border-color:#444}.Liberty .content-wrapper .liberty-sidebar .live-recent-list li{border-color:#444}.Liberty .content-wrapper .liberty-sidebar .live-recent-footer{background:#20252b}.Liberty .content-wrapper .liberty-content .liberty-content-main hr{border-color:#555}}
 @media(max-width:1023px){.Liberty .content-wrapper{padding-top:6.5rem}.Liberty .content-wrapper .liberty-sidebar{display:none}.Liberty .content-wrapper .liberty-content,.Liberty .content-wrapper .liberty-footer{margin-right:0}.Liberty .nav-wrapper .navbar{display:flex;flex-wrap:wrap}.Liberty .nav-wrapper .navbar .form-inline{order:5;width:100%;margin:0}.Liberty .nav-wrapper .navbar .form-inline .input-group{display:flex;width:100%}.Liberty .nav-wrapper .navbar .form-inline .form-control{width:100%}}
 @media(max-width:520px){.Liberty .content-wrapper .liberty-content{padding:0 5px}.Liberty .content-wrapper .liberty-content .liberty-content-main{padding:.75rem}.Liberty .content-wrapper .liberty-content .liberty-content-header{padding:.65rem}.Liberty .content-wrapper .liberty-content .liberty-content-header .title h1{font-size:1.55rem}.Liberty .content-wrapper .liberty-content .liberty-content-main table{max-width:100%;overflow-x:auto}.Liberty .nav-wrapper .navbar .navbar-nav .nav-item .nav-link{padding:.55rem .4rem}.Liberty .nav-wrapper .navbar .navbar-brand{margin-right:.5rem}}
+
+/* AonWki layout precedence: keep the Liberty skin's original desktop geometry. */
+.Liberty .content-wrapper .liberty-content{float:none!important;width:auto!important;margin-right:16rem!important;padding:0 15px!important;min-width:0}
+.Liberty .content-wrapper .liberty-content .liberty-content-header{display:block;background:#fff;border:1px solid #e1e8ed;border-bottom:0;padding:1rem 1.25rem}
+.Liberty .content-wrapper .liberty-content .liberty-content-main{display:block;background:#fff;border:1px solid #e1e8ed;padding:1.5rem 1.75rem;min-height:480px;color:#373a3c;overflow-wrap:anywhere}
+.Liberty .content-wrapper .liberty-content .liberty-content-main .wiki[data-wiki]{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;margin:0;max-width:none}
+.Liberty .content-wrapper .liberty-content .liberty-content-main .editor{display:none;margin-top:1rem;padding:1rem;background:#fff;border:1px solid #e1e8ed}
+.Liberty .content-wrapper .liberty-content .liberty-content-main .editor.open{display:block}
+.Liberty .content-wrapper .liberty-footer{margin-right:16rem!important;background:#fff;border:1px solid #e1e8ed;border-top:0;padding:1rem 1.25rem}
+.Liberty .content-wrapper .liberty-sidebar{float:right;width:15rem}
+.Liberty .content-wrapper .liberty-sidebar .liberty-right-fixed{position:static!important;width:15rem}
+@media(prefers-color-scheme:dark){
+.Liberty .content-wrapper .liberty-content .liberty-content-header,.Liberty .content-wrapper .liberty-content .liberty-content-main,.Liberty .content-wrapper .liberty-footer{background:#20252b!important;color:#ddd!important;border-color:#444!important}
+.Liberty .content-wrapper .liberty-content .liberty-content-header .title h1{color:#ddd}
+.Liberty .content-wrapper .liberty-content .liberty-content-main .editor{background:#20252b;border-color:#444}
+}
+@media(max-width:1023px){
+.Liberty .content-wrapper .liberty-content{float:none!important;width:auto!important;margin-right:0!important;padding:0 .5rem!important}
+.Liberty .content-wrapper .liberty-footer{margin-right:0!important}
+}
