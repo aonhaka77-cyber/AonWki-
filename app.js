@@ -2,9 +2,9 @@ import { initWasm, renderWithMetadata } from "./wasm.js";
 import { setupWikiInteractions } from "./interactions.js";
 
 const STORAGE_KEY = "aonwki.home.source.v1";
-const DEFAULT_SOURCE = `= AonWki에 오신 것을 환영합니다 =
+const DEFAULT_SOURCE = `= AonWIki에 오신 것을 환영합니다 =
 
-AonWki는 기존 **Namumark 파서와 WASM 렌더러**를 사용하는 위키입니다.
+AonWIki는 기존 **Namumark 파서와 WASM 렌더러**를 사용하는 위키입니다.
 
 == 문서 편집 ==
 오른쪽 아래의 **문서 편집** 버튼을 눌러 Namumark 원문을 수정할 수 있습니다.
