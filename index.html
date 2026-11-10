@@ -8,6 +8,54 @@
     <link rel="stylesheet" href="./namumark.css" />
     <link rel="stylesheet" href="./interactions.css" />
     <link rel="stylesheet" href="./AonWiki.css" />
+    <link rel="stylesheet" href="https://entrywiki.org/skins/nbs/assets/wikiContent-S3oAqOnJ.css" />
+    <link rel="stylesheet" href="https://entrywiki.org/skins/nbs/assets/index-S_awFza6.css" />
+    <link rel="stylesheet" href="https://entrywiki.org/skins/nbs/assets/prevNextBtn-DAuxILvp.css" />
+    <style id="aonwki-nbs-adapter">
+      body { background:#eee; }
+      body.theseed-dark-mode { background:#000; color:#eee; }
+      .bn-container { width:100%; max-width:none; margin:0; padding:0; }
+      .bn-header { min-height:64px; width:100%; box-sizing:border-box; display:flex; align-items:center; gap:24px; padding:10px max(24px,calc((100vw - 1400px)/2)); background:var(--skin_nbs_brand_color,#343a40); color:#fff; box-shadow:none; }
+      body.theseed-dark-mode .bn-header { background:#000; border-bottom:1px solid #444; }
+      .bn-header a,.bn-header .bn-nav a { color:#fff!important; text-decoration:none; }
+      .bn-logo { color:#fff!important; font-size:1.4rem; font-weight:700; white-space:nowrap; }
+      .bn-header nav { display:flex; align-items:center; }
+      .bn-nav { display:flex; align-items:center; gap:8px; margin:0; padding:0; list-style:none; }
+      .bn-nav a { display:block; padding:9px; border-radius:6px; }
+      .bn-nav a:hover { background:#ffffff20; }
+      .bn-spacer { flex:1; }
+      .bn-search { display:flex; align-items:center; gap:6px; }
+      .bn-search input { min-width:180px; height:38px; padding:6px 12px; color:inherit; background:transparent; border:1px solid #777; border-radius:6px; }
+      .bn-search button { height:38px; padding:0 14px; color:#fff; background:transparent; border:1px solid #777; border-radius:6px; cursor:pointer; }
+      .bn-mobile-search { display:none!important; }
+      .bn-main { width:calc(100% - 48px); max-width:1080px; margin:22px auto 0; padding:0; }
+      .bn-tabs { display:flex; gap:18px; padding:0 0 10px; margin:0; list-style:none; border-bottom:1px solid #ccc; }
+      .bn-page-meta { margin-top:18px; color:#777; font-size:.85rem; }
+      .bn-title { margin:8px 0 14px; font-size:1.7rem; font-weight:600; }
+      #content.bn-content { width:100%; max-width:1080px; margin:18px 0; padding:24px; border:1px solid #ccc; border-radius:8px; background:#fff; }
+      body.theseed-dark-mode #content.bn-content { background:#000; border-color:#555; }
+      #wiki-output { min-height:120px; }
+      .bn-editor,.bn-metadata,.bn-status { margin:16px 0; padding:14px; border:1px solid #ccc; border-radius:8px; background:var(--light-article-background-color,#fff); }
+      body.theseed-dark-mode .bn-editor,body.theseed-dark-mode .bn-metadata,body.theseed-dark-mode .bn-status { background:#1c1d1f; border-color:#555; }
+      .bn-editor textarea { display:block; width:100%; min-height:180px; margin-top:12px; padding:12px; color:inherit; background:transparent; border:1px solid #aaa; border-radius:4px; font:inherit; resize:vertical; }
+      .bn-footer { display:flex; justify-content:center; gap:8px; margin-top:28px; padding:24px; border-top:1px solid #ccc; }
+      body.theseed-dark-mode .bn-footer { border-color:#444; }
+      .bn-scroll-controls { position:fixed; right:18px; bottom:18px; display:flex; gap:6px; margin:0; padding:0; list-style:none; }
+      .bn-scroll-controls a { display:grid; place-items:center; width:38px; height:38px; color:inherit; background:#fff; border:1px solid #aaa; border-radius:6px; text-decoration:none; }
+      body.theseed-dark-mode .bn-scroll-controls a { background:#222; border-color:#555; }
+      @media(max-width:830px) {
+        .bn-header { flex-wrap:wrap; gap:8px; padding:10px 12px; }
+        .bn-header nav[aria-label="주 메뉴"] { order:3; width:100%; }
+        .bn-nav { width:100%; }
+        .bn-nav a { padding:6px; }
+        .bn-spacer { display:none; }
+        .bn-search { margin-left:auto; }
+        .bn-search input { min-width:0; width:130px; }
+        .bn-main { width:100%; margin-top:8px; }
+        #content.bn-content { border-width:0; border-radius:0; margin-top:0; padding:16px 12px; }
+        .bn-title,.bn-page-meta,.bn-tabs { margin-left:12px; margin-right:12px; }
+      }
+    </style>
     <script>
       (function () {
         const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
