@@ -1,35 +1,16 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#182b42">
-<title>AonWki</title>
-<link rel="stylesheet" href="./namumark.css"><link rel="stylesheet" href="./interactions.css"><link rel="stylesheet" href="./AonWiki.css"><link rel="stylesheet" href="./aonwiki-app.css?v=redesign-20261110">
-</head>
-<body>
-<header class="topbar"><div class="topbar-inner">
-<a class="brand" href="./?doc=대문">AonWki</a>
-<nav class="primary-nav" aria-label="주 메뉴"><a href="./?doc=대문">대문</a><a href="?view=recent" data-view="recent">최근 변경</a><a href="?view=all" data-view="all">모든 문서</a><a href="?view=categories" data-view="categories">분류</a></nav>
-<div class="top-spacer"></div>
-<form class="search-form" id="search-form" role="search"><input id="search" type="search" placeholder="위키에서 검색..." autocomplete="off" aria-label="문서 검색"><button type="submit">검색</button></form>
-<div class="top-actions"><button id="backup-button" title="백업 내보내기">백업</button></div>
-</div></header>
-<div class="layout">
-<aside class="sidebar" id="sidebar">
-<section class="side-card"><div class="side-title">WIKI NAVIGATION</div><a class="side-link" href="?doc=대문">⌂　대문</a><a class="side-link" href="?view=recent" data-view="recent">◷　최근 변경</a><a class="side-link" href="?view=all" data-view="all">▤　모든 문서</a><a class="side-link" href="?view=categories" data-view="categories">▦　분류 목록</a><button class="side-link" id="new-button" style="width:100%;text-align:left;border:0;background:transparent;font:inherit;cursor:pointer">＋　새 문서 만들기</button></section>
-<section class="side-card"><div class="side-title">PAGE TOOLS</div><a class="side-link" href="#" id="history-button">◴　문서 역사</a><label class="side-link" for="restore-file" style="cursor:pointer">↥　백업 복원</label><input id="restore-file" type="file" accept="application/json,.json" class="hidden"><div class="side-note">문서는 서버에 저장되어 모든 방문자와 공유됩니다. 현재 로그인·편집 권한 기능은 없으며 누구나 문서를 수정할 수 있습니다.</div></section>
-</aside>
-<main class="main hidden" id="main-view">
-<nav class="tabs" id="tabs"><a class="active" href="#article">문서</a><a href="#editor" id="edit-tab">원본 편집</a></nav>
-<div class="page-head"><div><div class="eyebrow">AONWKI　/　<span id="page-crumb">문서</span></div><h1 id="page-title">대문</h1></div><div class="page-actions"><button class="button" id="edit-button">편집</button><button class="button primary hidden" id="save-button">저장</button><button class="button hidden" id="cancel-button">취소</button></div></div>
-<div id="search-results" class="search-results"></div>
-<section class="article-card"><article id="wiki-output" class="wiki wiki-content" data-wiki></article><div id="article-meta" class="article-meta"></div></section>
-<section class="editor" id="editor"><div class="editor-head"><strong>문서 원본</strong><span class="eyebrow">NAMUMARK SOURCE</span></div><textarea id="source" spellcheck="false" aria-label="문서 원본"></textarea><p class="editor-help">나무마크 문법을 사용해 작성하세요. 저장하면 서버에 반영되어 모든 방문자에게 공유됩니다.</p></section>
-<div class="status" id="status" role="status"></div>
-</main>
-<aside class="right-rail" aria-label="위키 정보"><section class="rail-card"><div class="rail-mark">AONWKI WIKI</div><h2 class="rail-heading">함께 만드는 지식</h2><p class="rail-copy">문서를 읽고, 연결하고, 필요한 지식을 차곡차곡 정리해 보세요.</p></section><section class="rail-card"><h2 class="rail-heading">이용 안내</h2><p class="rail-copy">문서의 편집 버튼으로 내용을 수정할 수 있습니다. 중요한 변경 전에는 백업을 내려받아 두세요.</p></section></aside>
-<div id="loading" class="panel" style="grid-column:1/-1">AonWki를 시작하는 중… WASM 엔진을 불러오고 있습니다.</div>
-</div>
-<footer class="footer">AonWki · 기존 나무마크 WASM 렌더러 사용 · <a href="https://github.com/aonhaka77-cyber/AonWki-">GitHub 저장소</a></footer>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4188f1"><title>AonWki</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0-alpha.2/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"><link rel="stylesheet" href="./liberty-skin.css?v=liberty-20261110"><link rel="stylesheet" href="./namumark.css"><link rel="stylesheet" href="./interactions.css"></head>
+<body class="Liberty">
+<header class="nav-wrapper navbar-fixed-top"><nav class="navbar navbar-dark"><a class="navbar-brand" href="./?doc=대문">AonWki</a>
+<ul class="nav navbar-nav"><li class="nav-item"><a class="nav-link" href="?view=recent" data-view="recent"><span class="fa fa-refresh"></span><span class="hide-title"> 최근 변경</span></a></li><li class="nav-item"><a class="nav-link" href="?view=all" data-view="all"><span class="fa fa-list"></span><span class="hide-title"> 모든 문서</span></a></li><li class="nav-item"><a class="nav-link" href="?view=categories" data-view="categories"><span class="fa fa-folder-open"></span><span class="hide-title"> 분류</span></a></li><li class="nav-item"><a class="nav-link" href="#" id="new-button"><span class="fa fa-plus"></span><span class="hide-title"> 새 문서</span></a></li></ul>
+<div class="navbar-login"><button class="btn btn-secondary" id="backup-button" title="백업 내보내기"><span class="fa fa-download"></span></button></div>
+<form id="search-form" class="form-inline" role="search"><div class="input-group"><input id="search" class="form-control" type="search" placeholder="문서 검색" autocomplete="off" aria-label="문서 검색"><span class="input-group-btn"><button type="submit" class="btn btn-secondary" title="검색"><span class="fa fa-search"></span></button></span></div></form></nav></header>
+<div class="content-wrapper">
+<aside class="liberty-sidebar" id="sidebar"><div class="liberty-right-fixed"><section class="live-recent"><div class="live-recent-header">AonWki 안내</div><div class="live-recent-content"><ul class="live-recent-list"><li><a href="./?doc=대문">대문으로 이동</a></li><li><a href="?view=recent" data-view="recent">최근 변경 문서</a></li><li><a href="?view=all" data-view="all">전체 문서 목록</a></li><li><a href="?view=categories" data-view="categories">분류 목록</a></li><li><button class="btn btn-link p-0" id="history-button">현재 문서 역사</button></li><li><label for="restore-file" style="cursor:pointer;color:#4188f1">백업 파일 복원</label><input id="restore-file" type="file" accept="application/json,.json" class="hidden"></li></ul></div><div class="live-recent-footer"><small>나무마크 기반 위키</small></div></section></div></aside>
+<main class="container-fluid liberty-content hidden" id="main-view"><div class="liberty-content-header"><div class="content-tools"><div class="btn-group" role="group" aria-label="문서 도구"><button class="btn btn-secondary tools-btn" id="edit-button">편집</button><button class="btn btn-secondary tools-btn hidden" id="save-button">저장</button><button class="btn btn-secondary tools-btn hidden" id="cancel-button">취소</button></div></div><div class="title"><div class="small text-muted">AonWki</div><h1 id="page-title">대문</h1><small id="page-crumb" class="text-muted">문서</small></div></div>
+<section class="liberty-content-main wiki-article"><div id="search-results" class="search-results"></div><article id="wiki-output" class="wiki wiki-content" data-wiki></article><section class="editor" id="editor"><div class="editor-head"><strong>문서 원본 편집</strong></div><textarea id="source" spellcheck="false" aria-label="문서 원본"></textarea><p class="editor-help small text-muted">나무마크 문법으로 작성합니다. 저장하면 서버의 문서가 갱신됩니다.</p></section><div id="article-meta" class="article-meta"></div><div class="status" id="status" role="status"></div></section>
+<footer class="liberty-footer"><p>문서는 AonWki 서버에 저장되며 방문자와 공유됩니다. 현재 편집 권한 제한은 적용되어 있지 않습니다.</p><div id="powered"><a href="https://github.com/aonhaka77-cyber/AonWki-">AonWki GitHub</a> · Liberty skin 기반 디자인</div></footer>
+<div id="loading" class="liberty-content-main">AonWki를 시작하는 중…</div></main></div>
 <div class="modal-backdrop" id="history-modal"><section class="modal"><h2>문서 역사</h2><div id="history-list"></div><div class="modal-actions"><button class="button" id="history-close">닫기</button></div></section></div>
-<script type="module" src="./app.js?v=dd9681a"></script>
-</body></html>
+<script type="module" src="./app.js?v=dd9681a"></script></body></html>
