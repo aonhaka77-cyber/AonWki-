@@ -1272,3 +1272,12 @@ div.scroll-buttons a {
 .Liberty .content-wrapper .liberty-content{float:none!important;width:auto!important;margin-right:0!important;padding:0 .5rem!important}
 .Liberty .content-wrapper .liberty-footer{margin-right:0!important}
 }
+
+/* History dialog */
+.Liberty .modal-backdrop{display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55)}
+.Liberty .modal-backdrop.open{display:flex}
+.Liberty .modal-backdrop .modal{display:block;position:relative;width:min(620px,100%);max-height:85vh;overflow:auto;padding:1.25rem;background:#fff;color:#373a3c;border:1px solid #ddd;border-radius:.35rem;box-shadow:0 8px 32px #0004}
+.Liberty .modal-backdrop .modal h2{font-size:1.4rem;margin:0 0 1rem}
+.Liberty .modal-backdrop .modal .list-item{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem 0;border-bottom:1px solid #e1e8ed}
+.Liberty .modal-backdrop .modal-actions{display:flex;justify-content:flex-end;margin-top:1rem}
+@media(prefers-color-scheme:dark){.Liberty .modal-backdrop .modal{background:#20252b;color:#ddd;border-color:#555}.Liberty .modal-backdrop .modal .list-item{border-color:#444}}
