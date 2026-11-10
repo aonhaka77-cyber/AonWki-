@@ -1,7 +1,7 @@
 const ORIGIN="https://raw.githubusercontent.com/aonhaka77-cyber/AonWki-/main";
 const MIME={".html":"text/html; charset=utf-8",".htm":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".mjs":"text/javascript; charset=utf-8",".wasm":"application/wasm",".json":"application/json; charset=utf-8",".svg":"image/svg+xml",".png":"image/png",".jpg":"image/jpeg",".jpeg":"image/jpeg",".webp":"image/webp",".ico":"image/x-icon",".woff":"font/woff",".woff2":"font/woff2",".ttf":"font/ttf"};
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"}});
-async function listDocs(kv){const docs={};let cursor;do{const page=await kv.list({prefix:"doc:",limit:1000,cursor});for(const item of page.keys){const value=await kv.get(item.name,{type:"json"});if(value)docs[item.name.slice(4)]=value}cursor=page.list_complete?undefined:page.cursor}while(cursor);return docs}
+async function listDocs(kv){const docs={};let cursor;do{const page=await kv.list({prefix:"doc:",limit:1000,cursor});for(const item of page.keys){const value=await kv.get(item.name,{type:"json"});if(value)docs[decodeURIComponent(item.name.slice(4))]=value}cursor=page.list_complete?undefined:page.cursor}while(cursor);return docs}
 async function api(request,env,url){
  if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{"Access-Control-Allow-Methods":"GET, PUT, OPTIONS","Access-Control-Allow-Headers":"Content-Type"}});
  const parts=url.pathname.split("/").filter(Boolean);
