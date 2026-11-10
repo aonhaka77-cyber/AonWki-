@@ -1,0 +1,182 @@
+/* AonWki browser layout inspired by paul821/namuwiki's simple article template.
+   Namumark renderer and interaction styles are loaded separately and left untouched. */
+:root {
+  color-scheme: light;
+  font-family: Arial, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  color: #222;
+  background: #e7e7e7;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #e7e7e7;
+  color: #222;
+  font-size: 14px;
+}
+button, input, textarea { font: inherit; }
+button {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 7px 13px;
+  background: #f8f8f8;
+  color: #222;
+  cursor: pointer;
+}
+button:hover { background: #ededed; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
+  outline: 2px solid #3979b8;
+  outline-offset: 2px;
+}
+button:disabled { opacity: .55; cursor: default; }
+.topmenu {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px max(20px, calc((100vw - 1180px) / 2));
+  background: #f7f7f7;
+  border-bottom: 1px solid #c9c9c9;
+  box-shadow: 0 1px 3px #00000012;
+}
+.brand {
+  color: #333;
+  text-decoration: none;
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -.6px;
+}
+.search { display: flex; gap: 5px; width: min(420px, 58vw); }
+.search input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 6px 10px;
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+  background: white;
+}
+.search button { height: 34px; padding: 0 14px; }
+.page-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 26px auto 48px;
+}
+.page-card {
+  min-height: 72vh;
+  padding: 28px 34px 22px;
+  background: #fff;
+  border: 1px solid #c8c8c8;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px #0000000d;
+}
+.title_top { margin-bottom: 18px; }
+.eyebrow {
+  margin-bottom: 7px;
+  color: #777;
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+#page-title {
+  margin: 0;
+  color: #222;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.notice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  margin: 18px 0 14px;
+  padding: 11px 13px;
+  border: 1px solid #a9c9dc;
+  border-radius: 5px;
+  background: #eaf5fb;
+  color: #344c5b;
+  line-height: 1.55;
+}
+.notice strong { color: #263f50; }
+.classification {
+  margin: 12px 0;
+  padding: 8px 10px;
+  border: 1px solid #c8c8c8;
+  border-radius: 4px;
+  color: #555;
+  line-height: 1.6;
+}
+#mainlist {
+  width: min(100%, 390px);
+  margin: 18px 0 24px;
+  padding: 12px 18px;
+  border: 1px solid #c5c5c5;
+  border-radius: 5px;
+  background: #fafafa;
+}
+#mainlist h2 {
+  margin: 0 0 7px;
+  font-size: 16px;
+  font-weight: 700;
+}
+#toc-list { margin: 0; padding-left: 22px; line-height: 1.8; }
+#toc-list ol { padding-left: 20px; }
+#toc-list a { color: #286b9b; text-decoration: none; }
+#toc-list a:hover { text-decoration: underline; }
+.document-area { min-width: 0; }
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+  color: #777;
+  font-size: 12px;
+}
+.editor-panel {
+  margin-top: 16px;
+  padding: 15px;
+  border: 1px solid #c7c7c7;
+  border-radius: 5px;
+  background: #f7f7f7;
+}
+.editor-heading { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; margin-bottom: 9px; }
+.editor-heading span, .editor-note { color: #777; font-size: 12px; }
+#source-editor {
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #fff;
+  color: #222;
+  line-height: 1.6;
+  tab-size: 2;
+}
+.editor-actions { display: flex; justify-content: flex-end; gap: 7px; margin-top: 9px; }
+.editor-actions .secondary { background: transparent; }
+.editor-note { margin: 9px 0 0; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 700px) {
+  .topmenu { padding: 8px 14px; }
+  .brand { font-size: 19px; }
+  .page-shell { width: 100%; margin: 0 auto; }
+  .page-card { min-height: 100vh; padding: 22px 16px; border-radius: 0; border-left: 0; border-right: 0; }
+  #page-title { font-size: 27px; }
+  .notice { align-items: flex-start; flex-direction: column; }
+}
