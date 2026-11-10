@@ -22,7 +22,22 @@ function renderCategory(cat){const hits=allTitles().filter(t=>{const src=docs[t]
 function refresh(){const r=route();if(r.view==="article"){if(r.doc.startsWith("분류:"))renderCategory(r.doc.slice(3));else renderDoc(r.doc)}else renderList(r.view);document.querySelectorAll(".side-link").forEach(a=>a.classList.toggle("active",a.dataset.view===r.view));}
 async function createDoc(){const title=prompt("새 문서 제목");if(!title)return;const t=title.trim();if(!t||t.length>100){alert("문서 제목은 1~100자로 입력해 주세요.");return}if(docs[t]){go(urlFor(t));return}docs[t]={title:t,source:"",created:now(),updated:now(),author:"사용자"};await api("/docs/"+encodeURIComponent(t),{method:"PUT",body:JSON.stringify(docs[t])});await saveHistory(t,"");go(urlFor(t)+"&edit=1")}
 function edit(){if(!docs[current]){docs[current]={title:current,source:"",created:now(),updated:now(),author:"사용자"};}ui.source.value=docs[current].source;setMode("edit")}
-async function save(){const source=ui.source.value;const previous=docs[current]?.source||"";if(source===previous){setMode("article");return}await saveHistory(current,previous);docs[current]={...docs[current],title:current,source,updated:now(),author:"사용자"};await api("/docs/"+encodeURIComponent(current),{method:"PUT",body:JSON.stringify(docs[current])});dirty=false;refresh();history.replaceState(null,"",urlFor(current));}
+async function save(){
+ const source=ui.source.value;
+ const previous=docs[current]?.source||"";
+ if(source===previous){setMode("article");return;}
+ try{
+  await saveHistory(current,previous);
+  const updatedDoc={...docs[current],title:current,source:source,updated:now(),author:"사용자"};
+  await api("/docs/"+encodeURIComponent(current),{method:"PUT",body:JSON.stringify(updatedDoc)});
+  docs[current]=updatedDoc;
+  dirty=false;
+  refresh();
+  history.replaceState(null,"",urlFor(current));
+ }catch(error){
+  alert("저장에 실패했습니다: "+error.message);
+ }
+}
 function search(q){const term=q.trim().toLocaleLowerCase();if(!term){ui.searchResults.innerHTML="";return}const hits=allTitles().filter(t=>t.toLocaleLowerCase().includes(term)||docs[t].source.toLocaleLowerCase().includes(term)).slice(0,12);ui.searchResults.innerHTML=hits.map(t=>'<a class="search-result" href="'+urlFor(t)+'"><strong>'+safe(t)+'</strong><span>'+safe((docs[t].source||"").replace(/\s+/g," ").slice(0,100))+'</span></a>').join("")||'<div class="search-result">검색 결과가 없습니다. 새 문서를 만들 수 있습니다.</div>'}
 async function exportBackup(){const backup=await api("/export");const blob=new Blob([JSON.stringify({format:"AonWki backup",version:1,exportedAt:now(),...backup},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="aonwki-backup-"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(a.href)}
 async function importBackup(file){try{const data=JSON.parse(await file.text());const incoming=data.documents;if(!incoming||typeof incoming!=="object")throw Error("문서 데이터가 없습니다.");if(!confirm(Object.keys(incoming).length+"개 문서를 가져옵니다. 기존 문서는 같은 제목일 경우 덮어씁니다."))return;for(const [title,doc] of Object.entries(incoming))await api("/docs/"+encodeURIComponent(title),{method:"PUT",body:JSON.stringify(doc)});if(data.history)for(const [title,items] of Object.entries(data.history))await api("/history/"+encodeURIComponent(title),{method:"PUT",body:JSON.stringify(items)});docs={...docs,...incoming};alert("백업 복원이 완료되었습니다.");refresh()}catch(e){alert("백업 파일을 읽지 못했습니다: "+e.message)}}
