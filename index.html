@@ -3,104 +3,119 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>나무마크 테스트</title>
-    <link rel="stylesheet" href="namumark.css" />
-    <link rel="stylesheet" href="interactions.css" />
-    <script>
-      (function () {
-        {
-          if (
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme:dark)").matches
-          ) {
-            {
-              document.documentElement.classList.add("dark");
-            }
-          }
-          window
-            .matchMedia("(prefers-color-scheme:dark)")
-            .addEventListener("change", function (e) {
-              {
-                document.documentElement.classList.toggle("dark", e.matches);
-              }
-            });
-        }
-      })();
-    </script>
+    <meta name="theme-color" content="#3d414d" />
+    <title>AonWki</title>
+    <link rel="stylesheet" href="./namumark.css" />
+    <link rel="stylesheet" href="./interactions.css" />
+    <link rel="stylesheet" href="./before-namu.css" />
   </head>
   <body>
-    <div class="namuwiki">
-      <textarea
-        id="input"
-        placeholder="나무마크 문법 입력"
-        rows="10"
-        disabled
-      ></textarea>
-      <p id="status"></p>
-      <pre id="metadata" hidden></pre>
-      <article id="content" class="wiki wiki-content" data-wiki></article>
+    <div class="bn-container" id="top">
+      <header class="bn-header">
+        <a class="bn-logo" href="./" aria-label="AonWki 홈">AonWki</a>
+        <nav aria-label="주 메뉴">
+          <ul class="bn-nav">
+            <li><a href="#content">문서</a></li>
+            <li><a href="#recent">최근 변경</a></li>
+            <li><a href="#discussion">최근 토론</a></li>
+          </ul>
+        </nav>
+        <div class="bn-spacer"></div>
+        <form class="bn-search" role="search" onsubmit="return false">
+          <input type="search" placeholder="문서 검색" aria-label="문서 검색" />
+          <button type="submit" aria-label="검색">검색</button>
+        </form>
+        <nav class="bn-mobile-search" aria-label="모바일 검색">
+          <form class="bn-search" role="search" onsubmit="return false">
+            <input type="search" placeholder="문서 검색" aria-label="문서 검색" />
+            <button type="submit">검색</button>
+          </form>
+        </nav>
+      </header>
+
+      <main class="bn-main">
+        <ul class="bn-tabs" aria-label="문서 메뉴">
+          <li><a href="#content">문서</a></li>
+          <li><a href="#editor">원본</a></li>
+        </ul>
+        <div class="bn-page-meta">AonWki · 나무마크 렌더러</div>
+        <h1 class="bn-title">문서 미리보기</h1>
+
+        <article id="content" class="bn-content">
+          <article id="wiki-output" class="wiki wiki-content" data-wiki></article>
+        </article>
+
+        <details class="bn-editor" id="editor" open>
+          <summary>나무마크 원본 입력</summary>
+          <textarea id="input" placeholder="나무마크 문법 입력" rows="10" disabled></textarea>
+        </details>
+        <pre id="metadata" class="bn-metadata" hidden></pre>
+        <p id="status" class="bn-status" role="status">WASM loading…</p>
+      </main>
+
+      <footer class="bn-footer" id="bottom">
+        AonWki · <a href="https://github.com/aonhaka77-cyber/AonWki-">GitHub</a>
+        · <a href="https://github.com/openNAMU/Discard-openNAMU-Skin-Before_Namu">Before_Namu design reference</a>
+      </footer>
+      <ul class="bn-scroll-controls" aria-label="페이지 이동">
+        <li><a href="#top" title="위로">↑</a></li>
+        <li><a href="#bottom" title="아래로">↓</a></li>
+      </ul>
     </div>
+
     <script type="module">
       import { initWasm, renderWithMetadata } from "./wasm.js";
       import { setupWikiInteractions } from "./interactions.js";
 
       const input = document.getElementById("input");
-      const output = document.getElementById("content");
+      const output = document.getElementById("wiki-output");
       const status = document.getElementById("status");
       const metadata = document.getElementById("metadata");
       const interactions = setupWikiInteractions(output);
 
-      async function update() {
-        const text = input.value;
+      function update() {
+        const source = input.value;
         interactions.reset();
         metadata.textContent = "";
         metadata.hidden = true;
-        if (!text) {
+
+        if (!source) {
           output.innerHTML = "";
-          status.textContent = "";
+          status.textContent = "문서 원본을 입력하면 여기에 미리보기가 표시됩니다.";
           return;
         }
 
         try {
-          const start = performance.now();
-          const result = renderWithMetadata(text);
-          const elapsed = performance.now() - start;
+          const startedAt = performance.now();
+          const result = renderWithMetadata(source);
+          const elapsed = performance.now() - startedAt;
           output.innerHTML = result.html;
           interactions.refresh();
+
           const info = [];
-          if (result.categories.length) {
-            info.push(`분류: ${result.categories.join(", ")}`);
-          }
-          if (result.backlinks.length) {
-            info.push(`역링크: ${result.backlinks.join(", ")}`);
-          }
+          if (result.categories.length) info.push(`분류: ${result.categories.join(", ")}`);
+          if (result.backlinks.length) info.push(`역링크: ${result.backlinks.join(", ")}`);
           if (result.redirect_target != null) {
-            const anchor = result.redirect_anchor == null
-              ? ""
-              : `#${result.redirect_anchor}`;
+            const anchor = result.redirect_anchor == null ? "" : `#${result.redirect_anchor}`;
             info.push(`리다이렉트: ${result.redirect_target}${anchor}`);
           }
           metadata.textContent = info.join("\n");
           metadata.hidden = info.length === 0;
-          status.textContent = `${elapsed.toFixed(2)}ms`;
-        } catch (e) {
+          status.textContent = `렌더링 완료 · ${elapsed.toFixed(2)}ms`;
+        } catch (error) {
           output.innerHTML = "";
-          status.textContent = "Error: " + e.message;
+          status.textContent = "오류: " + error.message;
         }
       }
 
-      input.addEventListener("input", () => {
-        update();
-      });
-
-      status.textContent = "WASM loading…";
+      input.addEventListener("input", update);
       try {
         await initWasm();
         input.disabled = false;
-        if (input.value) await update();
-        else status.textContent = "WASM loaded";
-      } catch (e) {
-        status.textContent = "WASM load error: " + e.message;
+        status.textContent = "WASM 로드 완료 · 나무마크 원본을 입력하세요.";
+        if (input.value) update();
+      } catch (error) {
+        status.textContent = "WASM 로드 오류: " + error.message;
       }
     </script>
   </body>
