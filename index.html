@@ -3,105 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>나무마크 테스트</title>
-    <link rel="stylesheet" href="namumark.css" />
-    <link rel="stylesheet" href="interactions.css" />
-    <script>
-      (function () {
-        {
-          if (
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme:dark)").matches
-          ) {
-            {
-              document.documentElement.classList.add("dark");
-            }
-          }
-          window
-            .matchMedia("(prefers-color-scheme:dark)")
-            .addEventListener("change", function (e) {
-              {
-                document.documentElement.classList.toggle("dark", e.matches);
-              }
-            });
-        }
-      })();
-    </script>
+    <meta name="theme-color" content="#eeeeee" />
+    <title>AonWki</title>
+    <link rel="stylesheet" href="./namumark.css" />
+    <link rel="stylesheet" href="./interactions.css" />
+    <link rel="stylesheet" href="./app.css" />
+    <script type="module" src="./app.js"></script>
   </head>
   <body>
-    <div class="namuwiki">
-      <textarea
-        id="input"
-        placeholder="나무마크 문법 입력"
-        rows="10"
-        disabled
-      ></textarea>
-      <p id="status"></p>
-      <pre id="metadata" hidden></pre>
-      <article id="content" class="wiki wiki-content" data-wiki></article>
-    </div>
-    <script type="module">
-      import { initWasm, renderWithMetadata } from "./wasm.js";
-      import { setupWikiInteractions } from "./interactions.js";
+    <header class="topmenu">
+      <a class="brand" href="/" aria-label="AonWki 대문">AonWki</a>
+      <form id="search-form" class="search" role="search">
+        <label class="sr-only" for="search-input">문서 내 검색</label>
+        <input id="search-input" type="search" placeholder="문서에서 찾기" autocomplete="off" />
+        <button type="submit">검색</button>
+      </form>
+    </header>
 
-      const input = document.getElementById("input");
-      const output = document.getElementById("content");
-      const status = document.getElementById("status");
-      const metadata = document.getElementById("metadata");
-      const interactions = setupWikiInteractions(output);
+    <main class="page-shell">
+      <article class="page-card">
+        <div class="title_top">
+          <div class="eyebrow">AonWki · 자유로운 지식 공간</div>
+          <h1 id="page-title">대문</h1>
+        </div>
 
-      async function update() {
-        const text = input.value;
-        interactions.reset();
-        metadata.textContent = "";
-        metadata.hidden = true;
-        if (!text) {
-          output.innerHTML = "";
-          status.textContent = "";
-          return;
-        }
+        <div class="notice" role="status">
+          <strong>AonWki에 오신 것을 환영합니다.</strong>
+          <span>문서 내용과 문법은 기존 Namumark 엔진으로 렌더링됩니다.</span>
+        </div>
 
-        try {
-          const start = performance.now();
-          const result = renderWithMetadata(text);
-          const elapsed = performance.now() - start;
-          output.innerHTML = result.html;
-          interactions.refresh();
-          const info = [];
-          if (result.categories.length) {
-            info.push(`분류: ${result.categories.join(", ")}`);
-          }
-          if (result.backlinks.length) {
-            info.push(`역링크: ${result.backlinks.join(", ")}`);
-          }
-          if (result.redirect_target != null) {
-            const anchor = result.redirect_anchor == null
-              ? ""
-              : `#${result.redirect_anchor}`;
-            info.push(`리다이렉트: ${result.redirect_target}${anchor}`);
-          }
-          metadata.textContent = info.join("\n");
-          metadata.hidden = info.length === 0;
-          status.textContent = `${elapsed.toFixed(2)}ms`;
-        } catch (e) {
-          output.innerHTML = "";
-          status.textContent = "Error: " + e.message;
-        }
-      }
+        <div class="classification" id="classification" hidden></div>
 
-      input.addEventListener("input", () => {
-        update();
-      });
+        <nav id="mainlist" aria-label="목차" hidden>
+          <h2>목차</h2>
+          <ol id="toc-list"></ol>
+        </nav>
 
-      status.textContent = "WASM loading…";
-      try {
-        await initWasm();
-        input.disabled = false;
-        if (input.value) await update();
-        else status.textContent = "WASM loaded";
-      } catch (e) {
-        status.textContent = "WASM load error: " + e.message;
-      }
-    </script>
+        <section class="document-area">
+          <article id="content" class="wiki wiki-content" data-wiki aria-live="polite"></article>
+        </section>
+
+        <footer class="page-footer">
+          <span id="status">WASM 로딩 중…</span>
+          <button id="edit-toggle" type="button" disabled>문서 편집</button>
+        </footer>
+
+        <section id="editor-panel" class="editor-panel" hidden>
+          <div class="editor-heading">
+            <strong>문서 원문</strong>
+            <span>기존 Namumark 문법을 사용합니다.</span>
+          </div>
+          <textarea id="source-editor" spellcheck="false" rows="14" aria-label="Namumark 원문"></textarea>
+          <div class="editor-actions">
+            <button id="cancel-edit" type="button" class="secondary">취소</button>
+            <button id="save-edit" type="button">미리보기 반영</button>
+          </div>
+          <p class="editor-note">저장 내용은 현재 브라우저에만 보관됩니다.</p>
+        </section>
+      </article>
+    </main>
   </body>
 </html>
